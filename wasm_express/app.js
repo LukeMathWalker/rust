@@ -1,16 +1,11 @@
 const express = require('express')
-const rust = import('./pkg').catch(console.error);
+const { get_query_plan } = require('./pkg/wasm_express')
 
 const app = express()
 const port = 3000
 
 app.get('/', (req, res, next) => {
-    rust
-        .then(m => {
-            qp = m.get_query_plan();
-            res.send(JSON.stringify(qp));
-        })
-        .catch(next);
+    res.send(JSON.stringify(get_query_plan()));
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
