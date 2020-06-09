@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/cli/cli.iml" filepath="$PROJECT_DIR$/cli/cli.iml" />
       <module fileurl="file://$PROJECT_DIR$/graphql-parser/graphql-parser.iml" filepath="$PROJECT_DIR$/graphql-parser/graphql-parser.iml" />
       <module fileurl="file://$PROJECT_DIR$/query-planner/query-planner.iml" filepath="$PROJECT_DIR$/query-planner/query-planner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wasm_express/wasm_express.iml" filepath="$PROJECT_DIR$/wasm_express/wasm_express.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,3 @@
-use std::collections::BTreeMap;
-use std::fmt::Debug;
-
 use combine::easy::Error;
 use combine::error::StreamError;
 use combine::parser::choice::{choice, optional};
@@ -8,37 +5,49 @@ use combine::parser::item::position;
 use combine::parser::repeat::{many, many1};
 use combine::{parser, ParseResult, Parser};
 use ordered_float::OrderedFloat;
+use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
+use std::fmt::Debug;
 
 use crate::helpers::{ident, kind, name, punct};
 use crate::position::Pos;
 use crate::tokenizer::{Kind as T, Token, TokenStream};
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub struct Directive<'a> {
     pub position: Pos,
+    #[serde(borrow)]
     pub name: &'a str,
+    #[serde(borrow)]
     pub arguments: Vec<(Txt<'a>, Value<'a>)>,
 }
 
 pub type Txt<'a> = &'a str;
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub enum Value<'a> {
+    #[serde(borrow)]
     Variable(Txt<'a>),
     Int(i64),
     Float(OrderedFloat<f64>),
     String(String),
     Boolean(bool),
     Null,
+    #[serde(borrow)]
     Enum(Txt<'a>),
+    #[serde(borrow)]
     List(Vec<Value<'a>>),
+    #[serde(borrow)]
     Object(BTreeMap<Txt<'a>, Value<'a>>),
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Type<'a> {
+    #[serde(borrow)]
     NamedType(Txt<'a>),
+    #[serde(borrow)]
     ListType(Box<Type<'a>>),
+    #[serde(borrow)]
     NonNullType(Box<Type<'a>>),
 }
 

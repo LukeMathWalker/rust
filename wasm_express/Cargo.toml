@@ -1,14 +1,16 @@
 [package]
-name = "apollo-query-planner"
-version = "0.0.1"
-authors = ["Apollo <opensource@apollographql.com>"]
-homepage = "https://github.com/apollographql/rust"
+name = "wasm_express"
+version = "0.1.0"
+authors = ["Ran Magen <ran@apollographql.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+crate-type=["cdylib"]
+
 [dependencies]
+apollo-query-planner = { path = "../query-planner" }
 graphql-parser = { path = "../graphql-parser" }
 indexmap = { version = "1.4.0", features = ["serde-1"]}
-itertools = "0.9.0"
-serde = { version = "1.0.111", features = ["derive"] }
+wasm-bindgen = { version = "0.2.63", features = ["serde-serialize"] }

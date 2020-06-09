@@ -7,6 +7,7 @@
 //!
 pub use crate::common::{Directive, Txt, Type, Value};
 use crate::position::Pos;
+use serde::{Deserialize, Serialize};
 
 /// Root of query data
 #[derive(Debug, Clone, PartialEq)]
@@ -21,13 +22,17 @@ pub enum Definition<'a> {
     Fragment(FragmentDefinition<'a>),
 }
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub struct FragmentDefinition<'a> {
     pub position: Pos,
     pub description: Option<String>,
+    #[serde(borrow)]
     pub name: Txt<'a>,
+    #[serde(borrow)]
     pub type_condition: Txt<'a>,
+    #[serde(borrow)]
     pub directives: Vec<Directive<'a>>,
+    #[serde(borrow)]
     pub selection_set: SelectionSet<'a>,
 }
 
@@ -60,48 +65,66 @@ impl Operation {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub struct SelectionSet<'a> {
     pub span: (Pos, Pos),
+
+    #[serde(borrow)]
     pub items: Vec<Selection<'a>>,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct VariableDefinition<'a> {
     pub position: Pos,
+    #[serde(borrow)]
     pub name: Txt<'a>,
+    #[serde(borrow)]
     pub var_type: Type<'a>,
+    #[serde(borrow)]
     pub default_value: Option<Value<'a>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub enum Selection<'a> {
+    #[serde(borrow)]
     Field(Field<'a>),
+    #[serde(borrow)]
     FragmentSpread(FragmentSpread<'a>),
+    #[serde(borrow)]
     InlineFragment(InlineFragment<'a>),
 }
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub struct Field<'a> {
     pub position: Pos,
+    #[serde(borrow)]
     pub alias: Option<Txt<'a>>,
+    #[serde(borrow)]
     pub name: Txt<'a>,
+    #[serde(borrow)]
     pub arguments: Vec<(Txt<'a>, Value<'a>)>,
+    #[serde(borrow)]
     pub directives: Vec<Directive<'a>>,
+    #[serde(borrow)]
     pub selection_set: SelectionSet<'a>,
 }
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub struct FragmentSpread<'a> {
     pub position: Pos,
+    #[serde(borrow)]
     pub fragment_name: Txt<'a>,
+    #[serde(borrow)]
     pub directives: Vec<Directive<'a>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq, Serialize, Deserialize)]
 pub struct InlineFragment<'a> {
     pub position: Pos,
+    #[serde(borrow)]
     pub type_condition: Option<Txt<'a>>,
+    #[serde(borrow)]
     pub directives: Vec<Directive<'a>>,
+    #[serde(borrow)]
     pub selection_set: SelectionSet<'a>,
 }

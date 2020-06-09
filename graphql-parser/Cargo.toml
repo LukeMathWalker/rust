@@ -18,7 +18,8 @@ edition = "2018"
 combine = "3.8.1"
 thiserror = "1.0.19"
 bytecount = "0.6.0"
-ordered-float = "1.0.2"
+ordered-float = { version = "1.0.2", features = ["serde"] }
+serde = { version = "1.0.111", features = ["derive"] }
 
 [dev-dependencies]
 pretty_assertions = "0.6.1"
