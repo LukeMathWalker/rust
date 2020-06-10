@@ -5,8 +5,6 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fmt::{Display, Formatter};
 
-use crate::serialize;
-
 #[derive(Debug, Serialize, Deserialize)]
 pub enum ResponsePathElement {
     Field(String),
